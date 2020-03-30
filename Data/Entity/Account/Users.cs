@@ -18,7 +18,5 @@ namespace Data.Entity.Account
         public int RoleID { get; set; }
         [InverseProperty("Users")]
         public virtual IEnumerable<Tool> Tools { get; set; }
-        [InverseProperty("Users")]
-        public virtual IEnumerable<Rate> Rates { get; set; }
     }
 }
