@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Tool-Api/v16
+/.vs/Tool-Api/config
+/Data/bin/Debug/netcoreapp3.1
+/Data/obj
+/RazorTemplates/bin/Debug/netcoreapp3.1
+/RazorTemplates/obj
+/Services/bin/Debug/netcoreapp3.1
+/Services/obj
+/Utilities/bin/Debug/netcoreapp3.1
+/Utilities/obj
+/WebAPI/bin/Debug/netcoreapp3.1
+/WebAPI/obj
