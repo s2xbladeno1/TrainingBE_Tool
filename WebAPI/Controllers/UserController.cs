@@ -16,6 +16,12 @@ namespace WebAPI.Controllers
         {
             _userService = userService;
         }
+
+        /// <summary>
+        /// Api login user
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/user/login")]
         public async Task<IActionResult> Login([FromBody]LoginDto dto)
