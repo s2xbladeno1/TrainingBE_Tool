@@ -4,10 +4,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Services.Interfaces.Internal;
 
 namespace Services.Implementation.Internal
 {
-   public class SessionService
+   public class SessionService: ISessionService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         public ClaimsPrincipal Principal => _httpContextAccessor.HttpContext?.User;

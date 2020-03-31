@@ -6,6 +6,7 @@ using Data.Entity.Account;
 using Microsoft.AspNetCore.Mvc;
 using Services.Dto;
 using Services.Interfaces.Account;
+using Services.Interfaces.Internal;
 
 namespace WebAPI.Controllers
 {
@@ -34,6 +35,12 @@ namespace WebAPI.Controllers
             else
             {
                 var rtToken = await _userService.LoginResultToken(user);
+                var userSession = new UserSessionDto();
+                userSession.ID = user.ID;
+                userSession.UserName = user.UserName;
+                userSession.Password = user.Password;
+                userSession.RoleID = rtToken.RoleID;
+                userSession.Token = rtToken.Token;
                 return Ok(rtToken); 
             }
         }

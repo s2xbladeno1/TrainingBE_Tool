@@ -13,5 +13,6 @@ namespace Services.Interfaces.Internal
     {
         Task<List<ToolDetailsViewModel>> GetAll(PagingDto dto);
         Task<List<ToolDetailsViewModel>> Search(SearchFilterDto dto, PagingDto pagingDto);
+        Task<List<ToolDetailsViewModel>> MyTool(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Dapper.FastCrud;
 using Data;
 using Data.Entity.Account;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Services.Dto;
 using Services.Interfaces.Account;
@@ -17,9 +18,11 @@ namespace Services.Implementation.Account
 {
     public class UserService : BaseService, IUserService
     {
-        public UserService(DatabaseConnectService databaseConnectService) : base(databaseConnectService)
+        private readonly ILogger<UserService> _logger;
+        public UserService(DatabaseConnectService databaseConnectService, ILogger<UserService> logger) : base(databaseConnectService)
         {
             _databaseConnectService = databaseConnectService;
+            _logger = logger;
         }
 
         public async Task<Users> Login(LoginDto dto)
@@ -31,30 +34,38 @@ namespace Services.Implementation.Account
         }
         public async Task<LoginResultDto> LoginResultToken(Users user)
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySecretKey010203"));
-            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            try
+            {
+                _logger.LogInformation(user.FullName + " - Đăng nhập thành công");
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySecretKey010203"));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-            var tokenOptions = new JwtSecurityToken(
-                claims: new List<Claim> {
+                var tokenOptions = new JwtSecurityToken(
+                    claims: new List<Claim> {
                     new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
                     new Claim(ClaimTypes.Name, user.FullName),
                     new Claim(ClaimTypes.Role, user.RoleID.ToString())
-                },
-                expires: DateTime.Now.AddDays(2),
-                signingCredentials: signinCredentials
-            );
+                    },
+                    expires: DateTime.Now.AddDays(2),
+                    signingCredentials: signinCredentials
+                );
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-            return new LoginResultDto
+                return new LoginResultDto
                 {
                     ID = user.ID,
                     FullName = user.FullName,
                     UserName = user.UserName,
+                    RoleID = user.RoleID,
                     Token = tokenString
                 };
+            }
+            catch (Exception ex)
+            {
 
-
+                throw ex;
+            }
         }
     }
 }

@@ -13,6 +13,6 @@ namespace RazorTemplates.ViewModels
         public int ViewNumbers { get; set; }
         public int ViewDownloads { get; set; }
         public List<string> Tags { get; set; }
-        public List<double> RatedNumber { get; set; }
+        public double RatedNumber { get; set; }
     }
 }

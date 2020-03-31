@@ -26,6 +26,7 @@ namespace WebAPI.App_Start
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IToolService, ToolService>();
+            services.AddTransient<ISessionService, SessionService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
